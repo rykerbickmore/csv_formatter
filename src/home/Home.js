@@ -18,7 +18,12 @@ export const ACTIONS = {
 function reducer(state, action) {
   switch (action.type) {
     case ACTIONS.gettingFile:
-      return {mainSelect: true, isReady: false, data: [...action.payload], extras: []};
+      return {
+        mainSelect: true, 
+        isReady: false, 
+        data: [...action.payload], 
+        extras: [], 
+        toRemove: []};
     case (ACTIONS.select):
       if (state.mainSelect) {
         const newMainIndex = state.data.findIndex(element => element.name === action.payload)
@@ -40,8 +45,9 @@ function reducer(state, action) {
     case (ACTIONS.changeSelect):
       return Object.assign({}, state, {mainSelect: !state.mainSelect}); 
     case (ACTIONS.removeCard):
+      state.toRemove.push(state.data[action.payload.index])
       state.data.splice(action.payload.index, 1)
-      return Object.assign({}, state, {data: [...state.data]});
+      return Object.assign({}, state, {data: [...state.data], toRemove: [...state.toRemove]});
     default:
       return state.data;
   }

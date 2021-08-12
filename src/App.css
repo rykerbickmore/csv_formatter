@@ -1,0 +1,144 @@
+
+
+
+
+
+.main {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.column {
+  width: 49%;
+  height: 100vh;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.main-compare {
+  margin: 5px;
+  padding: 15px 15px 15px 15px;
+  height: 160px;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+.extra-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.extra-compares {
+  margin: 5px;
+  padding: 15px 15px 15px 15px;
+  height: calc(100vh - 250px);
+  border-radius: 10px;
+  border: 1px solid black;
+  overflow-y: auto;
+}
+
+.extra-compares:nth-child(2n +1) {
+  background-color: lightpink;
+}
+
+.highlight {
+  background-color: rgba(229, 245, 246, 1);
+  border: 3px solid black;
+}
+
+.switch {
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 10px;;
+}
+
+
+.card {
+  margin: 15px 5px 15px 5px;
+  height: 25px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  cursor: pointer;
+  background-color: rgb(255, 255, 255);
+}
+
+.main-card {
+  background-color: #77DA93 !important;
+}
+
+.cards {
+  margin: 0px 15px 15px 15px;
+  width: 95%;
+  height: calc(100vh - 230px);
+  overflow-y: auto;
+  
+}
+
+.extra-card {
+  margin: 15px 5px 1px 5px;
+  height: 25px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  cursor: pointer;
+  background-color: white;
+}
+
+.extra-card:nth-child(odd) {
+  margin-top: 0px;
+  margin-bottom: 15px;
+}
+
+.extra-card:hover {
+  background-color: rgb(255, 179, 194);
+}
+
+.mini-card {
+  margin-bottom: 2px;
+  width: 66px;
+  background-color: white;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.export {
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 47%;
+  height: 50px;
+  background-color: mediumseagreen;
+  border-radius: 10px;
+  color: white;
+  font-size: 25px;
+}
+
+.delete-btn {
+  float: right;
+  position: relative;
+  bottom: 40px;
+  left: 0px;
+  width: 25px;
+  margin-top: 6px;
+  z-index: 10;
+}
+
+
+
+
+
+

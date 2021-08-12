@@ -2,6 +2,7 @@ import React, { useState, useReducer } from 'react';
 import { Export } from '../components/Export';
 import { ExtraCompares } from '../components/ExtraCompares';
 import { MainCompare } from '../components/MainCompare';
+import { NameFile } from '../components/NameFile';
 import { ShowHeaders } from '../components/ShowHeaders';
 import { Switch } from '../components/Switch';
 
@@ -13,19 +14,24 @@ export const ACTIONS = {
   removeExtra: 'extra', 
   changeSelect: 'change-select',
   removeCard: 'remove-card',
+  nameFile: 'name-file', 
 }
 
 function reducer(state, action) {
   switch (action.type) {
-    case ACTIONS.gettingFile:
+    case (ACTIONS.gettingFile):
       return {
         mainSelect: true, 
         isReady: false, 
         data: [...action.payload], 
         extras: [], 
-        toRemove: []};
+        toRemove: [],
+        modal: false,
+        name: 'formated_csv'
+      };
     case (ACTIONS.select):
       if (state.mainSelect) {
+        console.log('here', action)
         const newMainIndex = state.data.findIndex(element => element.name === action.payload)
         state.data.forEach(item => {delete item.main})
         state.data[newMainIndex] = {name: action.payload, main: true}
@@ -45,19 +51,19 @@ function reducer(state, action) {
     case (ACTIONS.changeSelect):
       return Object.assign({}, state, {mainSelect: !state.mainSelect}); 
     case (ACTIONS.removeCard):
-      state.toRemove.push(state.data[action.payload.index])
+      state.toRemove.push(state.data[action.payload.index]?.name)
       state.data.splice(action.payload.index, 1)
       return Object.assign({}, state, {data: [...state.data], toRemove: [...state.toRemove]});
+    //Create a modal for naming the file
+    case (ACTIONS.nameFile):
+      state.name = action.payload.target.value
+      return Object.assign({}, state, { name: state.name })
     default:
-      return state.data;
+      return state;
   }
 }
 
-export function Home({
-
-}) {
-
-  
+export function Home() {
 
   const [isFileUploaded, setIsFileUploaded] = useState(false);
   const [csvData, setCsvData] = useState([]);
@@ -76,7 +82,8 @@ export function Home({
         csvData.push(tempObj)
       }
     })
-    setCsvData(csvData);
+    const filtered = csvData.filter(item => item[`Experiment Name`] !== "")
+    setCsvData(filtered);
     const tempCells = Object.keys(csvData[0]).filter(cell => {
       return cell.indexOf("Mean") > -1
     });
@@ -86,10 +93,6 @@ export function Home({
     setIsFileUploaded(true);
     dispatch({type: ACTIONS.gettingFile, payload: formattedTempCells})
   }
-
-
-
-
 
   return (
     <div className="main">
@@ -114,18 +117,20 @@ export function Home({
           null}
       </div>
       <div className="column">
-          <MainCompare
-            main={state.data?.find(item => item.main === true)}
-            isActive={state.mainSelect}/>
-          <ExtraCompares
-            isActive={state.mainSelect}
-            data={state.extras}
-            handleClick={(data, e) => dispatch({type: ACTIONS.removeExtra, payload: {index: data, e: e}})}/>
-          {isFileUploaded ? <Export
-            details={state}
-            csvData={csvData}
-            isReady={state.isReady}/> :
-            null}
+        <NameFile
+          handleInput={(e) => dispatch({type: ACTIONS.nameFile, payload: e})}/>
+        <MainCompare
+          main={state.data?.find(item => item.main === true)}
+          isActive={state.mainSelect}/>
+        <ExtraCompares
+          isActive={state.mainSelect}
+          data={state.extras}
+          handleClick={(data, e) => dispatch({type: ACTIONS.removeExtra, payload: {index: data, e: e}})}/>
+        {isFileUploaded ? <Export
+          details={state}
+          csvData={csvData}
+          isReady={state.isReady}/> :
+          null}
       </div>
     </div>
   )

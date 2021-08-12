@@ -21,8 +21,8 @@ then it will return the obj with the added property of the
 relationship between parent and child
 */
 export function addRelationProperty(obj, parent, child) {
-  let relation = (obj[child] / obj[parent]).toFixed(2)
-  obj[`${child} %${parent}`] = 
+  let relation = (obj[child] * obj[`${parent} %Parent`]) / 100
+  obj[`${child.slice(0, -8)} %${parent}`] = 
     isNaN(relation) ? 
       "" : 
       relation === "Infinity" ?

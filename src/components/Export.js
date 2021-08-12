@@ -10,6 +10,7 @@ export function Export({
 
 
   //TODO this function could be cleaned up, I am sure. 
+  //TODO create function file
   //!This should be able to know if there is a "main" calcualtion required. 
   function formatData(details, toCsv) {
 

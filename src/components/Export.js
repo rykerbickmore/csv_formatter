@@ -29,14 +29,16 @@ export function Export({
 
     //Exclude groups in output
     toCsv.forEach(obj => {
-      formattedData.push(excludeProperties(details.toRemove, obj))
+      if (details.toRemove) {
+        formattedData.push(excludeProperties(details.toRemove, obj))
+      }
     });
 
     //Main Calculation
     formattedData.forEach((item, i) => {
       for (const [key, value] of Object.entries(item)) {
         if (key.includes('%Parent')) {
-          let tempObj = addRelationProperty(item, main.name, key)
+          let tempObj = addRelationProperty(item, main.name, key.slice(0, -8))
           formattedData[i] = tempObj
         }
       }
@@ -45,7 +47,7 @@ export function Export({
     //Intermediate Calculations
     formattedData.forEach((item, i) => {
       for (let j = 0; j < details.extras.length; j+=2) { 
-        formattedData[i] = addRelationProperty(item, details.extras[j]?.name, `${details.extras[j+1].name} %Parent`)
+        formattedData[i] = addRelationProperty(item, details.extras[j]?.name, details.extras[j+1]?.name)
       }
     })
 

@@ -31,7 +31,6 @@ function reducer(state, action) {
       };
     case (ACTIONS.select):
       if (state.mainSelect) {
-        console.log('here', action)
         const newMainIndex = state.data.findIndex(element => element.name === action.payload)
         state.data.forEach(item => {delete item.main})
         state.data[newMainIndex] = {name: action.payload, main: true}

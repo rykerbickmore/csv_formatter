@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { CSVLink } from 'react-csv';
 import { addRelationProperty, excludeProperties } from '../utils/utilFunctions';
@@ -10,6 +10,8 @@ export function Export({
   csvData,
   isReady,
 }) {
+
+ const [exportData, setExportData] = useState([])
 
   function formatData(details, toCsv) {
     
@@ -50,7 +52,8 @@ export function Export({
         formattedData[i] = addRelationProperty(item, details.extras[j]?.name, details.extras[j+1]?.name)
       }
     })
-
+    //console.log('ran here', formattedData)
+    setExportData(formattedData);
     return formattedData   
   };
 
@@ -63,7 +66,7 @@ export function Export({
     
       <CSVLink
         className='export'
-        data={formatData(details, csvData)}
+        data={exportData}
         filename={`${details.name}.csv`}
         onClick={() => formatData(details, csvData)}>
         Download

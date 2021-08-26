@@ -27,13 +27,14 @@ function reducer(state, action) {
         extras: [], 
         toRemove: [],
         modal: false,
-        name: 'formated_csv'
+        name: 'formatted_csv'
       };
     case (ACTIONS.select):
       if (state.mainSelect) {
         const newMainIndex = state.data.findIndex(element => element.name === action.payload)
         state.data.forEach(item => {delete item.main})
         state.data[newMainIndex] = {name: action.payload, main: true}
+        console.log(state)
         return Object.assign({}, state, {isReady: true, data: [...state.data]});
       } else {
         state.extras.push({name: action.payload})
@@ -55,7 +56,11 @@ function reducer(state, action) {
       return Object.assign({}, state, {data: [...state.data], toRemove: [...state.toRemove]});
     //Create a modal for naming the file
     case (ACTIONS.nameFile):
-      state.name = action.payload.target.value
+      if (state.payload.target.value==="") {
+        state.name = "formatted_csv"
+      } else {
+        state.name = action.payload.target.value
+      }
       return Object.assign({}, state, { name: state.name })
     default:
       return state;
@@ -95,7 +100,6 @@ export function Home() {
 
   return (
     <div className="main">
-
       <div className="column">
         <CsvInput
           handleFileUpload={handleFileUpload}/>

@@ -29,7 +29,7 @@ export function addRelationProperty(obj, parent, child) {
 
   let done = false;
   let currentGroup = child.slice();
-  let relation = obj[`${currentGroup} %Parent`];
+  let relation = Number.parseFloat(obj[`${currentGroup} %Parent`]);
   
   
   while (!done) {
@@ -47,7 +47,6 @@ export function addRelationProperty(obj, parent, child) {
     }
   }
 
-  console.log(typeof relation)
   obj[`${child} %${parent}`] = 
     isNaN(relation) ?
       "" :
